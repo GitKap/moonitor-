@@ -1,16 +1,28 @@
 'use strict';
 
+/* App Module */
 
-// Declare app level module which depends on filters, and services
-angular.module('myApp', [
-  'ngRoute',
-  'myApp.filters',
-  'myApp.services',
-  'myApp.directives',
-  'myApp.controllers'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {templateUrl: 'partials/partial1.html', controller: 'MyCtrl1'});
-  $routeProvider.when('/view2', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'});
-  $routeProvider.otherwise({redirectTo: '/view1'});
+var moonitorApp = angular.module('moonitorApp', []);
+
+ moonitorApp.config(['$logProvider',
+    function($logProvider) {
+      $logProvider.debugEnabled(true);
+    }]);
+
+ moonitorApp.config(['$httpProvider', function($httpProvider) {
+    //initialize get if not there
+    if (!$httpProvider.defaults.headers.get) {
+        $httpProvider.defaults.headers.get = {};    
+    }
+    //disable IE ajax request caching
+    $httpProvider.defaults.headers.get['If-Modified-Since'] = '0';
 }]);
+
+
+ $('#tabAll').click(function(){
+  $('#tabAll').addClass('active');  
+  $('.tab-pane').each(function(i,t){
+    $('#myTabs li').removeClass('active'); 
+    $(this).addClass('active');  
+  });
+});
