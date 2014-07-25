@@ -25,7 +25,30 @@ var moonitorApp = angular.module('moonitorApp', [])
 
 					responsePromise.error(function(data, status, headers, config) 
 					{
-						$log.debug("not good");
+						$log.debug("fuckup...");
+					});
+			}
+		});
+
+
+		moonitorApp.controller('ajaxController', function($scope, $http, $log)
+		{
+			$scope.ajaxData={};
+			$scope.ajaxData.doClick = function(item, event)
+			{
+				var responsePromise = $http.get('../scripts/moon/api.cgi?jsonparser&1cpu_info.sh&cpu_cores.sh')
+					
+					responsePromise.success(function(data, status, headers, config) 
+					{
+						$log.debug(data);
+						//$scope.ajaxData = data;
+						$scope.ajaxData.cpu_model = data.cpu_model;
+						$scope.ajaxData.cpu_cores = data.cpu_cores;
+					});
+
+					responsePromise.error(function(data, status, headers, config) 
+					{
+						$log.debug("fuckup...");
 					});
 			}
 		});
